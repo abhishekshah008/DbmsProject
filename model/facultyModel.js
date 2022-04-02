@@ -1,11 +1,15 @@
 const mongoose = require("mongoose");
 
 const facultySchema = new mongoose.Schema({
-    facultyName:String,
-    facultyId:String,
-    email:String,
-    password:String,
-    profilePic:String,
+    facultyName:{
+      type:String,
+      required:[true,"Please enter your Name"]
+    },
+    facultyId:{
+      type:mongoose.Schema.ObjectId,
+      ref:"User",
+      require :true
+    },
     department:[{
       name:String,
       course:{
@@ -16,7 +20,7 @@ const facultySchema = new mongoose.Schema({
     }],
   
     
-  });
+  },{timestamps: true});
 
 
 module.exports = mongoose.model("Faculty", facultySchema);

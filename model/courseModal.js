@@ -9,27 +9,36 @@ const courseSchema = new mongoose.Schema({
     students:[
       {
        type:mongoose.Schema.ObjectId,
-       ref:"faculty",
+       ref:"Student",
        require :true
  
      }],
-     courseName:String,
-     department:String,
-     batch:String,
-     facultyName:String,
+     courseName:{
+       type:String,
+       required:[true,"Please enter the course name"]
+     },
+     department:{
+      type:String,
+      required:[true,"Please enter the department name"]
+
+     },
+     batch:{
+      type:String,
+      required:[true,"Please enter the batch name"]
+     },
+     facultyName:{
+      type:String,
+      required:[true,"Please enter the faculty"]
+     },
      assigment:[{
        
          type:mongoose.Schema.ObjectId,
-         ref:"assigment",
+         ref:"Assigment",
          require :true 
        
  
-     }],
- 
- 
- 
-   
- });
+     }]   
+ },{timestamps: true});
  
 
 module.exports = mongoose.model("Course", courseSchema);

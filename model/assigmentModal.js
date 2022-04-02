@@ -2,22 +2,34 @@ const mongoose = require("mongoose");
 
 const submissionSchema =new mongoose.Schema({
     student:{
-  
+      type:mongoose.Schema.ObjectId,
+      ref:"User",
+      require :true  
     },
     assigmentId:{
+      type:mongoose.Schema.ObjectId,
+      ref:"Assigment",
+      require :true
   
     },
     status:{
-  
+      type:String,
+      enum:["Missing","Assign","Turn Late ","Submitted"],
+      default:"Assign"  
     },
     data:{
+      public_id: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      }
   
-    },
-    createdAt:{
-  
-    },
+    },    
     marks:Number
-  })
+  },{timestamps: true})
   
   
   const assigmentSchema = new mongoose.Schema({
@@ -28,31 +40,37 @@ const submissionSchema =new mongoose.Schema({
       },
       deadline:{
         type: Date,
-      },
-       
+        required:[true,"Please enter the deadline"]
+      },       
       course:{
           type:mongoose.Schema.ObjectId,
-          ref:"faculty",
+          ref:"Faculty",
           require :true  
       },
       assigmentType:{
         type:String,
         enum:["Assigment","ClassTest","SubjectiveTest","McqTest"],
-        default:"Assigment"
-  
+        default:"Assigment"  
       },
-      title:String,
-      material:String, //file
-      description:String,
+      title:{
+        type:String,
+        required:[true,"Please enter the title "]
+      },
+      material:{
+        public_id: {
+          type: String,
+          required: true,
+        },
+        url: {
+          type: String,
+          required: true,
+        }
+      }, //file
+      description:{
+        type:String
+      },
       submissionDetails:[submissionSchema],
-      createdAt:{
-        type:Date,
-        default:Date.now()
-      }
-      
-  
-    
-  });
+  },{timestamps: true});
   
 
 module.exports = mongoose.model("Assigment", assigmentSchema);
